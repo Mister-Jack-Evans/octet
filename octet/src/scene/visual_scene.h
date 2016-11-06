@@ -352,10 +352,9 @@ namespace octet { namespace scene {
 
 		spring->setLinearLowerLimit(btVector3(0, 0, 0));
 		spring->setLinearUpperLimit(btVector3(0.8f, 0, 0));
-		//spring->setDamping(5, 0.01f);
 		spring->enableSpring(0, true);
 
-		world->addConstraint(spring, true);
+		world->addConstraint(spring);
 	}
 #endif // OCTET_BULLET
 
