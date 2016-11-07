@@ -10,8 +10,8 @@ namespace octet {
     // scene for drawing box
     ref<visual_scene> app_scene;
 
-	int numPlanks = 11;
-	btRigidBody *rb_bridge[11];
+	int numPlanks = 5;
+	btRigidBody *rb_bridge[5];
 	 
 	mat4t mat;
 
@@ -58,7 +58,7 @@ namespace octet {
 
 	  //East Side of bridge
 	  mat.loadIdentity();
-	  mat.translate(14, 0, 0);
+	  mat.translate(10, 0, 0);
 	  mesh_instance *east_side = app_scene->add_shape(mat, new mesh_box(vec3(1, 1, 20), 1), green, false);
 	  rb_bridge[numPlanks - 1] = west_side->get_node()->get_rigid_body();
 
@@ -69,29 +69,20 @@ namespace octet {
 	  btTransform tran1B = btTransform::getIdentity();
 	  tran1B.setOrigin(btVector3(-0.8f, 0.0f, 18.0f));
 
-	  /*btTransform tran2A = btTransform::getIdentity();
+	  btTransform tran2A = btTransform::getIdentity();
 	  tran2A.setOrigin(btVector3(0.8f, 0.0f, -18.0f));
 
 	  btTransform tran2B = btTransform::getIdentity();
 	  tran2B.setOrigin(btVector3(-0.8f, 0.0f, -18.0f));
-*/
+
 	  //Apply the spring to the rb_bridge array populated above
 
 	  for (int i = 0; i < numPlanks -1 ; i++) {
 		  app_scene->addSpring(rb_bridge[i], rb_bridge[i + 1], tran1A, tran1B);
-		  //app_scene->addSpring(rb_bridge[i], rb_bridge[i + 1], tran2A, tran2B);
+		  app_scene->addSpring(rb_bridge[i], rb_bridge[i + 1], tran2A, tran2B);
 	  }
 
-	  tran1A = btTransform::getIdentity();
-	  tran1A.setOrigin(btVector3(0.8f, 0.0f, -18.0f));
-
-	  tran1B = btTransform::getIdentity();
-	  tran1B.setOrigin(btVector3(-0.8f, 0.0f, -18.0f));
-	  for (int i = 0; i < numPlanks - 1; i++) {
-		  app_scene->addSpring(rb_bridge[i], rb_bridge[i + 1], tran1A, tran1B);
-		  //app_scene->addSpring(rb_bridge[i], rb_bridge[i + 1], tran2A, tran2B);
-	  }
-
+	  
 
 	  //draw the water under the bridge
 	  mat.loadIdentity();
@@ -99,31 +90,6 @@ namespace octet {
 	  app_scene->add_shape(mat, new mesh_box(vec3(28, 1, numPlanks*3), 1), blue, false);
 
     }
-
-
-	//void move_Player() {
-	//	//printf("%f %f %f\n", ballForce.x(), ballForce.y(), ballForce.z());
-
-	//	// left and right arrows, moving along the X axis
-	//	if (is_key_down(key_left)) {
-	//		ballForce += btVector3(-0.3f, 0, 0);
-	//	}
-	//	else if (is_key_down(key_right)) {
-	//		ballForce += btVector3(0.3f, 0, 0);
-	//	}
-	//	//Up and Down Arrows, moving along the Z axis
-	//	else if (is_key_down(key_up)) {
-	//		ballForce += btVector3(0, 0, -0.1f);
-	//	}
-	//	else if (is_key_down(key_down)) {
-	//		ballForce += btVector3(0, 0, 0.1f);
-	//	}
-	//	else {
-	//		ballForce = btVector3(0, 0, 0);
-	//	}
-	//	rb_ball->applyForce(ballForce, btVector3(0, 0, 0));
-	//}
-
 	
 	
 
